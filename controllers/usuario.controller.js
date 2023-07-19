@@ -5,8 +5,12 @@ const getUsers = (req, res)=>{
 }
 
 const postUsers = (req, res)=>{
+    const {nombre, edad, gustos} = req.body;
     res.status(500).json({
-        "message":"post api"
+        "message":"post api",
+        nombre,
+        edad,
+        gustos
     });
 }
 

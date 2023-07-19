@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const router = require('../routes/usuario.routes');
+const {dbConnection} = require('../database/config.js');
 class Server {
 
     constructor(){
@@ -8,15 +9,23 @@ class Server {
         
         this.port = process.env.PORT
         this.usuariosPath = "/api/usuarios";
+        /* Conectar a base de datos MONGODB */
+        this.connectDB();
         /* Middlewares */
         this.middlewares();
         /* Routing */
         this.routes();
     }
 
+    async connectDB(){
+        await dbConnection();
+    }
+
     middlewares(){
         /* Cors  */
         this.app.use(cors());
+        /* Leer y parsear un JSON en BODY */
+        this.app.use(express.json());
 
         /* Public Directory */
         this.app.use(express.static('public'));
